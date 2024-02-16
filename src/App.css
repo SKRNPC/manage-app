@@ -11,9 +11,11 @@
     display: inline-block;
     position: fixed;
     
+
 }
 .main-content{
-    margin-left: 250px;
+    margin-left: 258px;
+    width: 100%;
     
 }
 .rounded-image {
