@@ -2,7 +2,7 @@ import resim1 from "../images/580b57fcd9996e24bc43c325.png";
 function AdminPanel() {
   return (
     <>
-      <div className="admin-panel flex flex-col items-center justify-center ">
+      <div className="admin-panel flex flex-col items-center justify-center">
         <p className="text-2xl font-bold">MANAGE COURSES</p>
         <img
           src={resim1}
