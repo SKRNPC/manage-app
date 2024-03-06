@@ -2,13 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  users: [],
+  data: [],
 };
 
 export const getUsers = createAsyncThunk("getUsers", async () => {
   try {
-    const { data } = await axios.get("https://dummyjson.com/users");
-    return data;
+    const response = await axios.get("https://dummyjson.com/users");
+    return response.data.users;
   } catch (error) {
     console.error("Error fetching users data:", error);
     throw error;
@@ -20,7 +20,7 @@ export const usersSlice = createSlice({
   reducers: [],
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state, action) => {
-      state.users = action.payload;
+      state.data = action.payload;
     });
   },
 });
