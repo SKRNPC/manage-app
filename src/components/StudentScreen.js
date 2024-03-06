@@ -1,23 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../redux/features/usersSlice";
 
 function StudentScreen() {
   const dispatch = useDispatch();
+  const { data: users } = useSelector((state) => state.users);
 
-  const users = useSelector((state) => state.users);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage, setUsersPerPage] = useState(6);
 
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
 
-  console.log("users", users.data);
+  // Geçerli sayfadaki kullanıcıları hesapla
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+  // Sayfa değiştirme fonksiyonu
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Sayfa başına kullanıcı sayısını değiştirme fonksiyonu
+  const handleUsersPerPageChange = (e) => {
+    setUsersPerPage(Number(e.target.value));
+    setCurrentPage(1); // Kullanıcı sayısı değiştiğinde 1. sayfaya dön
+  };
+
+  // Sayfa numaralarını hesapla
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(users.length / usersPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
   return (
-    <div className="p-10 h-screen bg-orange-100">
+    <div className="p-10 min-h-screen bg-orange-100">
       <div className="flex items-center justify-between py-5 w-full border-b border-[#ec8f8f]">
-        <p className="text-2xl font-bold ">Students List</p>
+        <p className="text-2xl font-bold">Students List</p>
         <div className="ml-auto flex">
           <SearchBar />
           <button className="bg-orange-300 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded ml-4">
@@ -37,7 +57,7 @@ function StudentScreen() {
         </p>
       </div>
       <div>
-        {users.data.map((user, index) => (
+        {currentUsers?.map((user, index) => (
           <div
             key={index}
             className="flex items-center justify-between text-base bg-red-200 p-2 rounded-lg mt-2"
@@ -57,6 +77,29 @@ function StudentScreen() {
             <p className="w-[18%]">{user.domain}</p>
             <p className="w-[25%]">{user.company.name}</p>
           </div>
+        ))}
+      </div>
+      <div className="flex justify-center mt-4">
+        <div>
+          <select
+            value={usersPerPage}
+            onChange={handleUsersPerPageChange}
+            className="bg-red-300 border border-red-300 text-white rounded focus:ring-red-500 focus:border-red-400 p-2 w-auto font-bold"
+          >
+            <option value="3">3</option>
+            <option value="6">6</option>
+            <option value="9">9</option>
+            <option value="12">12</option>
+          </select>
+        </div>
+        {pageNumbers.map((number) => (
+          <button
+            key={number}
+            onClick={() => paginate(number)}
+            className="bg-orange-300 hover:bg-orange-500 text-white font-bold py-1 px-4 rounded ml-1"
+          >
+            {number}
+          </button>
         ))}
       </div>
     </div>
