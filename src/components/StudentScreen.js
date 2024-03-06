@@ -26,11 +26,13 @@ function StudentScreen() {
         </div>
       </div>
       <div className="flex p-5">
-        <p className=" text-sm ml-28 font-semibold text-red-400 ">Name</p>
-        <p className=" ml-36 text-sm font-semibold text-red-400 ">Email</p>
-        <p className=" ml-44 text-sm font-semibold text-red-400 ">Phone</p>
-        <p className=" ml-36 text-sm font-semibold text-red-400 ">Website</p>
-        <p className=" ml-36 text-sm font-semibold text-red-400 ">
+        <p className=" w-[18%] ml-36 text-sm font-semibold text-red-400 ">
+          Name
+        </p>
+        <p className=" w-[22%] text-sm font-semibold text-red-400 ">Email</p>
+        <p className=" w-[18%] text-sm font-semibold text-red-400 ">Phone</p>
+        <p className=" w-[18%] text-sm font-semibold text-red-400 ">Website</p>
+        <p className=" w-[25%] text-sm font-semibold text-red-400 ">
           Company Name
         </p>
       </div>
@@ -40,15 +42,20 @@ function StudentScreen() {
             key={index}
             className="flex items-center justify-between text-base bg-red-200 p-2 rounded-lg mt-2"
           >
-            <p className="ml-4">
+            <div className="w-20 h-16 rounded-lg object-contain overflow-hidden">
+              <img
+                alt=""
+                src={user.image}
+                className="w-full h-full object-fill css-0"
+              ></img>
+            </div>
+            <p className="w-[18%] ml-9">
               {user.firstName} {user.lastName}
             </p>
-            <p className="ml-20">{user.email}</p>
-            <p className="ml-20">{user.phone}</p>
-            <p className="ml-20">{user.domain}</p>{" "}
-            {/* Assuming 'domain' exists in your user data */}
-            <p className="ml-20">{user.companyName}</p>{" "}
-            {/* Adjust these fields based on the actual user object structure */}
+            <p className="w-[22%]">{user.email}</p>
+            <p className="w-[18%]">{user.phone}</p>
+            <p className="w-[18%]">{user.domain}</p>
+            <p className="w-[25%]">{user.company.name}</p>
           </div>
         ))}
       </div>
