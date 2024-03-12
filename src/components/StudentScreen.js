@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../redux/features/usersSlice";
+import { Link } from "react-router-dom";
+import { ReactComponent as PenSvg } from "../svgImage/pen.svg";
+import { ReactComponent as TrashSvg } from "../svgImage/trash.svg";
 
 function StudentScreen() {
   const dispatch = useDispatch();
@@ -40,9 +43,11 @@ function StudentScreen() {
         <p className="text-2xl font-bold">Students List</p>
         <div className="ml-auto flex">
           <SearchBar />
-          <button className="bg-orange-300 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded ml-4">
-            Add New Student
-          </button>
+          <Link to="/student/app" className="menu-link">
+            <button className="bg-orange-300 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded ml-4">
+              Add New Student
+            </button>
+          </Link>
         </div>
       </div>
       <div className="flex p-5">
@@ -52,7 +57,7 @@ function StudentScreen() {
         <p className=" w-[22%] text-sm font-semibold text-red-400 ">Email</p>
         <p className=" w-[18%] text-sm font-semibold text-red-400 ">Phone</p>
         <p className=" w-[18%] text-sm font-semibold text-red-400 ">Website</p>
-        <p className=" w-[25%] text-sm font-semibold text-red-400 ">
+        <p className=" w-[29%] text-sm font-semibold text-red-400 ">
           Company Name
         </p>
       </div>
@@ -76,6 +81,8 @@ function StudentScreen() {
             <p className="w-[18%]">{user.phone}</p>
             <p className="w-[18%]">{user.domain}</p>
             <p className="w-[25%]">{user.company.name}</p>
+            <PenSvg className="w-6 h-6 mr-2 " />
+            <TrashSvg className="w-6 h-6 ml-2 " />
           </div>
         ))}
       </div>
