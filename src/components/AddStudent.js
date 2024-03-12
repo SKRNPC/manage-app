@@ -1,4 +1,39 @@
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addStudent } from "../redux/features/studentSlice";
+
 function AddStudent() {
+  const [student, setStudent] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    phone: "",
+    age: "",
+  });
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setStudent((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addStudent(student));
+    // Formu temizle
+    setStudent({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      phone: "",
+      age: "",
+    });
+  };
   return (
     <div class="bg-orange-100 min-h-screen flex items-center justify-center p-10">
       <div class="p-5 rounded bg-red-200 my-8 max-w-lg w-full">
@@ -7,7 +42,7 @@ function AddStudent() {
           <h3 class="font-bold text-xl">SAVE</h3>
           <p class="text-xs text-gray-700">Enter Student Information</p>
         </div>
-        <form class="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} class="flex flex-col gap-4">
           <div>
             <label class="block text-sm font-bold">First Name</label>
             <input
@@ -15,6 +50,8 @@ function AddStudent() {
               type="text"
               name="firstName"
               placeholder="Enter your first name"
+              value={student.firstName}
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -24,6 +61,8 @@ function AddStudent() {
               type="text"
               name="lastName"
               placeholder="Enter your last name"
+              value={student.lastName}
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -33,6 +72,8 @@ function AddStudent() {
               type="email"
               name="email"
               placeholder="Enter your email"
+              value={student.email}
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -42,6 +83,8 @@ function AddStudent() {
               type="password"
               name="password"
               placeholder="Enter your password"
+              value={student.password}
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -51,6 +94,8 @@ function AddStudent() {
               type="text"
               name="phone"
               placeholder="Enter your phone"
+              value={student.phone}
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -60,6 +105,8 @@ function AddStudent() {
               type="number"
               name="age"
               placeholder="Enter your age"
+              value={student.age}
+              onChange={handleChange}
             />
           </div>
           <button
