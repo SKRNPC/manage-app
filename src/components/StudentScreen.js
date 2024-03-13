@@ -61,11 +61,11 @@ function StudentScreen() {
           Company Name
         </p>
       </div>
-      <div>
+      <div className="text-sm">
         {currentUser.map((user, index) => (
           <div
             key={index}
-            className="flex items-center justify-between text-base bg-red-200 p-2 rounded-lg mt-2"
+            className="text-sm flex items-center justify-between bg-red-200 p-2 rounded-lg mt-2"
           >
             <div className="w-20 h-16 rounded-lg object-contain overflow-hidden">
               <img
@@ -85,9 +85,9 @@ function StudentScreen() {
             <p className="w-[25%]">{user.company?.name || "N/A"}</p>{" "}
             {/* company.name özelliği yoksa 'N/A' yazdır */}
             {/* PenSvg ve TrashSvg'i kullanıcı etkileşimi için ekleyin */}
-            <button onClick={() => handleDeleteUser(user.id)}>
-              <PenSvg className="w-6 h-6" />
-            </button>
+            <Link to={`/student/${user.id}`}>
+              <PenSvg className="w-6 h-6 ml-2" />
+            </Link>
             <button onClick={() => handleDeleteUser(user.id)}>
               <TrashSvg className="w-6 h-6 ml-2" />
             </button>

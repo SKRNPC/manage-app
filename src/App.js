@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import StudentScreen from "./components/StudentScreen"; // Yeni eklediğimiz dosya
 import AddStudent from "./components/AddStudent";
 import "react-toastify/dist/ReactToastify.css";
+import UpdateStudent from "./components/UpdateStudent";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<HomeScreen />} />
             <Route path="/student" element={<StudentScreen />} />
             <Route path="/student/add" element={<AddStudent />} />
+            <Route path="/student/:id" element={<UpdateStudent />} />{" "}
           </Routes>
         </div>
       </div>
