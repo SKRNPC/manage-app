@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addStudent } from "../redux/features/studentSlice";
+import { addUser } from "../redux/features/usersSlice"; // Redux action'ınız (varsa)
 
 function AddStudent() {
   const [student, setStudent] = useState({
@@ -11,8 +11,10 @@ function AddStudent() {
     phone: "",
     age: "",
   });
+
   const dispatch = useDispatch();
 
+  // Kullanıcı bilgilerindeki değişiklikleri işleyen fonksiyon
   const handleChange = (e) => {
     const { name, value } = e.target;
     setStudent((prevState) => ({
@@ -21,32 +23,37 @@ function AddStudent() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  // Yeni kullanıcıyı API'ye ekleyen ve başarıyla eklendiyse yerel state'e ekleyen fonksiyon
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(addStudent(student));
-    // Formu temizle
-    setStudent({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      phone: "",
-      age: "",
-    });
+    try {
+      dispatch(addUser(student));
+      setStudent({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        phone: "",
+        age: "",
+      });
+    } catch (error) {
+      console.error("Kullanıcı eklenirken bir hata oluştu:", error);
+    }
   };
+
   return (
-    <div class="bg-orange-100 min-h-screen flex items-center justify-center p-10">
-      <div class="p-5 rounded bg-red-200 my-8 max-w-lg w-full">
-        <div class="text-center mb-8">
-          <h1 class="font-bold text-3xl mb-2">ADD NEW STUDENT</h1>
-          <h3 class="font-bold text-xl">SAVE</h3>
-          <p class="text-xs text-gray-700">Enter Student Information</p>
+    <div className="bg-orange-100 min-h-screen flex items-center justify-center p-10">
+      <div className="p-5 rounded bg-red-200 my-8 max-w-lg w-full">
+        <div className="text-center mb-8">
+          <h1 className="font-bold text-3xl mb-2">ADD NEW STUDENT</h1>
+          <h3 className="font-bold text-xl">SAVE</h3>
+          <p className="text-xs text-gray-700">Enter Student Information</p>
         </div>
-        <form onSubmit={handleSubmit} class="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label class="block text-sm font-bold">First Name</label>
+            <label className="block text-sm font-bold">First Name</label>
             <input
-              class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               type="text"
               name="firstName"
               placeholder="Enter your first name"
@@ -55,9 +62,9 @@ function AddStudent() {
             />
           </div>
           <div>
-            <label class="block font-bold text-sm">Last Name</label>
+            <label className="block font-bold text-sm">Last Name</label>
             <input
-              class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               type="text"
               name="lastName"
               placeholder="Enter your last name"
@@ -66,9 +73,9 @@ function AddStudent() {
             />
           </div>
           <div>
-            <label class="block font-bold text-sm">Email</label>
+            <label className="block font-bold text-sm">Email</label>
             <input
-              class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               type="email"
               name="email"
               placeholder="Enter your email"
@@ -77,9 +84,9 @@ function AddStudent() {
             />
           </div>
           <div>
-            <label class="block text-sm font-bold">Password</label>
+            <label className="block text-sm font-bold">Password</label>
             <input
-              class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               type="password"
               name="password"
               placeholder="Enter your password"
@@ -88,9 +95,9 @@ function AddStudent() {
             />
           </div>
           <div>
-            <label class="block font-bold text-sm ">Phone</label>
+            <label className="block font-bold text-sm ">Phone</label>
             <input
-              class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               type="text"
               name="phone"
               placeholder="Enter your phone"
@@ -99,9 +106,9 @@ function AddStudent() {
             />
           </div>
           <div>
-            <label class="block font-bold text-sm ">Age</label>
+            <label className="block font-bold text-sm ">Age</label>
             <input
-              class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               type="number"
               name="age"
               placeholder="Enter your age"
@@ -111,7 +118,7 @@ function AddStudent() {
           </div>
           <button
             type="submit"
-            class="mt-4 px-4 py-2 bg-red-400 text-white font-bold rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+            className="mt-4 px-4 py-2 bg-red-400 text-white font-bold rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
           >
             Submit
           </button>

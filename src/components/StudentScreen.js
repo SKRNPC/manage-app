@@ -9,20 +9,17 @@ import { ReactComponent as TrashSvg } from "../svgImage/trash.svg";
 function StudentScreen() {
   const dispatch = useDispatch();
   const { data: users } = useSelector((state) => state.users);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(6);
-  const { list: students } = useSelector((state) => state.students);
 
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
-  const combinedUsers = [...users, ...students];
 
   // Geçerli sayfadaki kullanıcıları hesapla
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUser = combinedUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUser = users.slice(indexOfFirstUser, indexOfLastUser);
 
   // Sayfa değiştirme fonksiyonu
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -33,7 +30,7 @@ function StudentScreen() {
 
   // Sayfa numaralarını hesapla
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(combinedUsers.length / usersPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(users.length / usersPerPage); i++) {
     pageNumbers.push(i);
   }
 
@@ -88,12 +85,13 @@ function StudentScreen() {
             <button onClick={() => console.log("Pen butonuna tıklandı")}>
               <PenSvg className="w-6 h-6" />
             </button>
-            <button onClick={() => console.log("Trash butonuna tıklandı")}>
+            <button>
               <TrashSvg className="w-6 h-6 ml-2" />
             </button>
           </div>
         ))}
       </div>
+
       <div className="flex justify-center mt-4">
         <div>
           <select

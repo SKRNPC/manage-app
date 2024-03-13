@@ -9,9 +9,14 @@ export const studentSlice = createSlice({
     addStudent: (state, action) => {
       state.list.push(action.payload);
     },
+    removeStudent: (state, action) => {
+      state.list = state.list.filter(
+        (student, index) => index !== action.payload
+      );
+    },
   },
 });
 
-export const { addStudent } = studentSlice.actions;
+export const { addStudent, removeStudent } = studentSlice.actions;
 
 export default studentSlice.reducer;
