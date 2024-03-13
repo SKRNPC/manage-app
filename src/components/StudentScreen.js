@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../redux/features/usersSlice";
+import { getUsers, deleteUser } from "../redux/features/usersSlice";
 import { Link } from "react-router-dom";
 import { ReactComponent as PenSvg } from "../svgImage/pen.svg";
 import { ReactComponent as TrashSvg } from "../svgImage/trash.svg";
@@ -33,6 +33,9 @@ function StudentScreen() {
   for (let i = 1; i <= Math.ceil(users.length / usersPerPage); i++) {
     pageNumbers.push(i);
   }
+  const handleDeleteUser = (userId) => {
+    dispatch(deleteUser(userId));
+  };
 
   return (
     <div className="p-10 min-h-screen bg-orange-100">
@@ -40,7 +43,7 @@ function StudentScreen() {
         <p className="text-2xl font-bold">Students List</p>
         <div className="ml-auto flex">
           <SearchBar />
-          <Link to="/student/app" className="menu-link">
+          <Link to="/student/add" className="menu-link">
             <button className="bg-orange-300 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded ml-4">
               Add New Student
             </button>
@@ -82,10 +85,10 @@ function StudentScreen() {
             <p className="w-[25%]">{user.company?.name || "N/A"}</p>{" "}
             {/* company.name özelliği yoksa 'N/A' yazdır */}
             {/* PenSvg ve TrashSvg'i kullanıcı etkileşimi için ekleyin */}
-            <button onClick={() => console.log("Pen butonuna tıklandı")}>
+            <button onClick={() => handleDeleteUser(user.id)}>
               <PenSvg className="w-6 h-6" />
             </button>
-            <button>
+            <button onClick={() => handleDeleteUser(user.id)}>
               <TrashSvg className="w-6 h-6 ml-2" />
             </button>
           </div>
