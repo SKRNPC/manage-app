@@ -1,4 +1,3 @@
-// App.js
 import { ToastContainer } from "react-toastify";
 import "./App.css";
 import HomeScreen from "./components/HomeScreen";
@@ -8,16 +7,18 @@ import StudentScreen from "./components/StudentScreen"; // Yeni eklediğimiz dos
 import AddStudent from "./components/AddStudent";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateStudent from "./components/UpdateStudent";
+import SignInScreen from "./components/SignIn";
 
 function App() {
   return (
     <Router>
       <ToastContainer />
+      <SignInScreen />
       <div className="App">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className=" main-content">
           <Routes>
-            <Route path="/" element={<HomeScreen />} />
+            <Route path="/home" element={<HomeScreen />} />
             <Route path="/student" element={<StudentScreen />} />
             <Route path="/student/add" element={<AddStudent />} />
             <Route path="/student/:id" element={<UpdateStudent />} />{" "}
