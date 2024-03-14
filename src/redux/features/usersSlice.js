@@ -63,6 +63,31 @@ export const deleteUser = createAsyncThunk(
     }
   }
 );
+export const updateUser = createAsyncThunk(
+  "users/updateUser",
+  async ({ id, ...updateData }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `https://dummyjson.com/users/${id}`,
+        updateData
+      );
+      return response.data; // Güncellenmiş kullanıcı verisini döndür
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const fetchUserById = createAsyncThunk(
+  "users/fetchById",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`https://dummyjson.com/users/${userId}`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 export const usersSlice = createSlice({
   name: "users",
@@ -78,6 +103,15 @@ export const usersSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.data = state.data.filter((user) => user.id !== action.payload); // Silinen kullanıcıyı state'den kaldır
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload
+          ? action.payload.errorMessage
+          : action.error.message;
+      })
+      .addCase(fetchUserById.fulfilled, (state, action) => {
+        state.selectedUser = action.payload; // Seçili kullanıcının bilgileriyle state'i güncelle
       });
   },
 });
