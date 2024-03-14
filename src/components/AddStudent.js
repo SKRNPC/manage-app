@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/features/usersSlice"; // Redux action'ınız (varsa)
+import { useNavigate } from "react-router-dom";
 
 function AddStudent() {
   const [student, setStudent] = useState({
@@ -13,6 +14,8 @@ function AddStudent() {
   });
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   // Kullanıcı bilgilerindeki değişiklikleri işleyen fonksiyon
   const handleChange = (e) => {
@@ -36,6 +39,7 @@ function AddStudent() {
         phone: "",
         age: "",
       });
+      navigate("/student");
     } catch (error) {
       console.error("Kullanıcı eklenirken bir hata oluştu:", error);
     }
@@ -98,7 +102,7 @@ function AddStudent() {
             <label className="block font-bold text-sm ">Phone</label>
             <input
               className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              type="text"
+              type="number"
               name="phone"
               placeholder="Enter your phone"
               value={student.phone}

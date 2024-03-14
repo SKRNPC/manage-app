@@ -57,7 +57,7 @@ export const deleteUser = createAsyncThunk(
           draggable: true,
         }
       );
-      return id; // Silme işlemi başarılıysa, silinen kullanıcının ID'sini döndür
+      return id;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -70,6 +70,19 @@ export const updateUser = createAsyncThunk(
       const response = await axios.put(
         `https://dummyjson.com/users/${id}`,
         updateData
+      );
+      toast.warn(
+        `${response.data.firstName} ${
+          response.data.lastName
+        } was updated, ${new Date().toLocaleString()}`,
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
       );
       return response.data; // Güncellenmiş kullanıcı verisini döndür
     } catch (error) {
@@ -104,11 +117,13 @@ export const usersSlice = createSlice({
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.data = state.data.filter((user) => user.id !== action.payload); // Silinen kullanıcıyı state'den kaldır
       })
-      .addCase(updateUser.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload
-          ? action.payload.errorMessage
-          : action.error.message;
+      .addCase(updateUser.fulfilled, (state, action) => {
+        const index = state.data.findIndex(
+          (user) => user.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.data[index] = action.payload;
+        }
       })
       .addCase(fetchUserById.fulfilled, (state, action) => {
         state.selectedUser = action.payload; // Seçili kullanıcının bilgileriyle state'i güncelle

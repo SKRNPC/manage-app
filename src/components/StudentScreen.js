@@ -5,6 +5,7 @@ import { getUsers, deleteUser } from "../redux/features/usersSlice";
 import { Link } from "react-router-dom";
 import { ReactComponent as PenSvg } from "../svgImage/pen.svg";
 import { ReactComponent as TrashSvg } from "../svgImage/trash.svg";
+import resim1 from "../images/580b57fcd9996e24bc43c325.png";
 
 function StudentScreen() {
   const dispatch = useDispatch();
@@ -15,11 +16,16 @@ function StudentScreen() {
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
+  const searchTerm = useSelector((state) => state.search.searchTerm);
+  const filteredUsers = users.filter(
+    (user) =>
+      user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  // Geçerli sayfadaki kullanıcıları hesapla
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUser = users.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUser = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
   // Sayfa değiştirme fonksiyonu
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -30,7 +36,7 @@ function StudentScreen() {
 
   // Sayfa numaralarını hesapla
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(users.length / usersPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(filteredUsers.length / usersPerPage); i++) {
     pageNumbers.push(i);
   }
   const handleDeleteUser = (userId) => {
@@ -70,21 +76,20 @@ function StudentScreen() {
             <div className="w-20 h-16 rounded-lg object-contain overflow-hidden">
               <img
                 alt=""
-                src={user.image || "default-image-url"} // image yoksa varsayılan bir URL
+                src={user.image || resim1}
                 className="w-full h-full object-fill"
               ></img>
             </div>
-            <p className="w-[18%] ml-9">
+            <p className="w-[18%]  ml-16">
               {user.firstName} {user.lastName}
             </p>
             <p className="w-[22%]">{user.email}</p>
-            <p className="w-[18%]">{user.phone || "N/A"}</p>{" "}
-            {/* phone özelliği yoksa 'N/A' yazdır */}
-            <p className="w-[18%]">{user.domain || "N/A"}</p>{" "}
-            {/* domain özelliği yoksa 'N/A' yazdır */}
-            <p className="w-[25%]">{user.company?.name || "N/A"}</p>{" "}
-            {/* company.name özelliği yoksa 'N/A' yazdır */}
-            {/* PenSvg ve TrashSvg'i kullanıcı etkileşimi için ekleyin */}
+            <p className="w-[18%]">{user.phone}</p>
+
+            <p className="w-[18%]">{user.domain}</p>
+
+            <p className="w-[25%]">{user.company?.name}</p>
+
             <Link to={`/student/${user.id}`}>
               <PenSvg className="w-6 h-6 ml-2" />
             </Link>

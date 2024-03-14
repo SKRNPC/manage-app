@@ -6,7 +6,8 @@ import { updateUser, fetchUserById } from "../redux/features/usersSlice"; // Kul
 function UpdateStudent() {
   const { id } = useParams(); // URL'den kullanıcı ID'sini al
   const dispatch = useDispatch();
-  const selectedUser = useSelector((state) => state.users.selectedUser); // Seçili kullanıcıyı store'dan al
+  const selectedUser = useSelector((state) => state.users.selectedUser);
+  // Seçili kullanıcıyı store'dan al
 
   useEffect(() => {
     dispatch(fetchUserById(id)); // Component yüklendiğinde, seçili kullanıcının bilgilerini getir
@@ -23,33 +24,34 @@ function UpdateStudent() {
     website: "",
   });
 
-  // Mevcut kullanıcı verilerini forma yükle
   useEffect(() => {
-    // selectedUser güncellendiğinde formu onun bilgileriyle doldur
+    // Seçili kullanıcı bilgileri değiştiğinde, form verilerini güncelle
     if (selectedUser) {
       setFormData({
-        firstName: selectedUser.firstName || "",
-        lastName: selectedUser.lastName || "",
-        email: selectedUser.email || "",
-        password: "", // Güvenlik nedeniyle şifre genellikle boş bırakılır
-        phone: selectedUser.phone || "",
-        website: selectedUser.website || "",
+        firstName: selectedUser.firstName,
+        lastName: selectedUser.lastName,
+        email: selectedUser.email,
+        phone: selectedUser.phone,
+        website: selectedUser.domain,
       });
     }
   }, [selectedUser]);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // updateUser action'ını tetikle
-    await dispatch(updateUser({ id, ...formData }));
-    navigate("/student"); // Güncellemeden sonra öğrenci listeleme sayfasına yönlendir
+    // Güncelleme isteğini yap
+    dispatch(updateUser({ id, ...formData }))
+      .then(() => {
+        navigate("/student"); // Başarılı güncellemeden sonra kullanıcı listeleme sayfasına yönlendir
+      })
+      .catch((error) => {
+        console.error("Güncelleme sırasında bir hata oluştu", error);
+      });
   };
   return (
     <>
@@ -110,7 +112,7 @@ function UpdateStudent() {
                 <label className="block font-bold text-sm ">Phone</label>
                 <input
                   className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  type="number"
+                  type="text"
                   name="phone"
                   placeholder="Enter your phone"
                   value={formData.phone}
