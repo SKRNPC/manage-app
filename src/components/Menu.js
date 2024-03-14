@@ -10,7 +10,7 @@ function Menu() {
   return (
     <>
       <div className="flex flex-col items-center justify-center mt-24">
-        <Link to="/" className="menu-link">
+        <Link to="/home" className="menu-link">
           <button className="bg-red-300 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mt-4 w-32 flex">
             <div className="flex items-center">
               <HomeSvg className="w-6 h-6 mr-2 " />

@@ -2,6 +2,10 @@
     font-family: monospace;
     display: flex;
   }
+  .Home{
+    font-family: monospace;
+    display: block;
+  }
   .sidebar-css{
     display: flex;
     flex-direction: column;
