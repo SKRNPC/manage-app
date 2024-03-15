@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/features/authSlice";
 
 function SignInScreen() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Form'un varsayılan submit işlemini engeller.
-    // Burada giriş doğrulama işlemlerinizi gerçekleştirebilirsiniz.
-    // Doğrulama başarılı ise, kullanıcıyı Home ekranına yönlendirin.
+    event.preventDefault();
+    dispatch(login());
     navigate("/home");
   };
 

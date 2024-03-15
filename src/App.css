@@ -1,9 +1,9 @@
 .App {
-    font-family: monospace;
+    
     display: flex;
   }
   .Home{
-    font-family: monospace;
+    
     display: block;
   }
   .sidebar-css{
@@ -17,7 +17,6 @@
 }
 .main-content{
     margin-left: 258px;
-    width: 100%;
     
 }
 .rounded-image {

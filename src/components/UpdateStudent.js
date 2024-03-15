@@ -44,10 +44,10 @@ function UpdateStudent() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Güncelleme isteğini yap
+
     dispatch(updateUser({ id, ...formData }))
       .then(() => {
-        navigate("/student"); // Başarılı güncellemeden sonra kullanıcı listeleme sayfasına yönlendir
+        navigate("/student");
       })
       .catch((error) => {
         console.error("Güncelleme sırasında bir hata oluştu", error);
@@ -55,7 +55,7 @@ function UpdateStudent() {
   };
   return (
     <>
-      <div>
+      <div className="main-content">
         <div className="bg-orange-100 min-h-screen flex items-center justify-center p-10">
           <div className="p-5 rounded bg-red-200 my-8 max-w-lg w-full">
             <div className="text-center mb-8">

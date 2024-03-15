@@ -5,7 +5,7 @@ import { ReactComponent as UsersSvg } from "../svgImage/users.svg";
 
 function HomeScreen() {
   return (
-    <>
+    <div className="main-content">
       <div className="p-10 flex overflow-auto h-screen bg-orange-100">
         <div className="p-3 w-64 h-32 bg-orange-500 bg-opacity-50 text-white relative mr-6">
           <StuSvg className="w-7 h-7 mb-1" />
@@ -36,7 +36,7 @@ function HomeScreen() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
