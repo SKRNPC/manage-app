@@ -31,6 +31,7 @@ function SignInScreen() {
                 type="email"
                 name="email"
                 placeholder="Enter your email"
+                required
               />
             </div>
             <div>
@@ -40,6 +41,7 @@ function SignInScreen() {
                 type="password"
                 name="password"
                 placeholder="Enter your password"
+                required
               />
             </div>
 
